@@ -13,7 +13,17 @@
       --accent: #fca311;
       --background: #fefefe;
       --text: #14213d;
-      --muted: #e5e5e5;
+      --card-bg: #e5e5e5;
+      --form-bg: #ffffff;
+      --border-color: #ddd;
+    }
+
+    .dark-mode {
+      --background: #1a1a1a;
+      --text: #fefefe;
+      --card-bg: #2d2d2d;
+      --form-bg: #222222;
+      --border-color: #444;
     }
 
     * {
@@ -30,25 +40,17 @@
       transition: background-color 0.3s, color 0.3s;
     }
 
-    body.dark-mode {
-      background-color: #1a1a1a;
-      color: #fefefe;
-    }
-
     header {
       padding: 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background-color: white;
+      background-color: var(--form-bg);
       box-shadow: 0 2px 6px rgba(0,0,0,0.05);
       position: sticky;
       top: 0;
       z-index: 1000;
-    }
-
-    .dark-mode header {
-      background-color: #222;
+      transition: background-color 0.3s;
     }
 
     nav a {
@@ -58,10 +60,6 @@
       color: var(--text);
       font-weight: 600;
       transition: color 0.3s ease;
-    }
-
-    .dark-mode nav a {
-      color: #eee;
     }
 
     nav a:hover {
@@ -85,7 +83,7 @@
       justify-content: center;
       text-align: center;
       padding: 4rem 2rem;
-      background: linear-gradient(135deg, #edf6f9, #fff);
+      background: linear-gradient(135deg, var(--card-bg), var(--background));
     }
 
     .hero img {
@@ -97,11 +95,12 @@
     .hero h1 {
       font-size: 2.5rem;
       margin: 1rem 0;
+      min-height: 3.8rem; /* Prevents layout shifting during typing */
     }
 
     .hero p {
       font-size: 1.1rem;
-      color: #555;
+      opacity: 0.8;
     }
 
     .section {
@@ -122,7 +121,8 @@
     }
 
     .swiper-slide {
-      background: #f9f9f9;
+      background: var(--card-bg);
+      color: var(--text);
       padding: 2rem;
       border-radius: 10px;
       border-left: 5px solid var(--primary);
@@ -130,7 +130,8 @@
     }
 
     .services div {
-      background: var(--muted);
+      background: var(--card-bg);
+      color: var(--text);
       padding: 1.5rem;
       border-radius: 8px;
       margin-bottom: 1rem;
@@ -142,7 +143,7 @@
 
     .experience li {
       padding: 1rem 0;
-      border-bottom: 1px solid #ddd;
+      border-bottom: 1px solid var(--border-color);
     }
 
     .portfolio {
@@ -153,6 +154,8 @@
 
     .portfolio img {
       width: 100%;
+      height: 250px;
+      object-fit: cover;
       border-radius: 8px;
       transition: transform 0.3s ease;
     }
@@ -161,7 +164,6 @@
       transform: scale(1.03);
     }
 
-    /* Pagination styling */
     .pagination {
       text-align: center;
       margin-top: 2rem;
@@ -177,24 +179,31 @@
       cursor: pointer;
     }
 
-    .pagination button:hover {
+    .pagination button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+
+    .pagination button:not(:disabled):hover {
       background: var(--accent);
     }
 
     footer {
       padding: 2rem;
-      background: var(--text);
+      background: #14213d;
       color: white;
       text-align: center;
     }
 
     .contact-form {
-      background: #fff;
+      background: var(--form-bg);
       padding: 2rem;
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0,0,0,0.05);
       max-width: 600px;
       margin: 2rem auto;
+      border: 1px solid var(--border-color);
     }
 
     .contact-form input,
@@ -203,8 +212,10 @@
       padding: 1rem;
       margin-bottom: 1rem;
       border-radius: 5px;
-      border: 1px solid #ccc;
+      border: 1px solid var(--border-color);
       font-size: 1rem;
+      background: var(--background);
+      color: var(--text);
     }
 
     .contact-form button {
@@ -232,6 +243,9 @@
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
       z-index: 1000;
       transition: transform 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .whatsapp-float:hover {
@@ -246,13 +260,12 @@
     .typed-text {
       font-weight: bold;
       color: var(--primary);
-      animation: fadeIn 0.5s ease-in-out;
     }
 
     .cursor {
       display: inline-block;
       background-color: var(--primary);
-      width: 1px;
+      width: 2px;
       animation: blink 0.7s steps(1) infinite;
       margin-left: 5px;
     }
@@ -266,26 +279,30 @@
       header {
         padding: 1rem;
         flex-direction: column;
-        align-items: flex-start;
+        gap: 1rem;
       }
 
       nav {
-        flex-direction: column;
-        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
         gap: 0.5rem;
+        width: 100%;
       }
 
-      .hero h1 { font-size: 1.5rem; }
-      .hero p { font-size: 1rem; }
-      .hero img { width: 90%; max-width: 250px; }
-      .portfolio { grid-template-columns: 1fr; }
+      nav a {
+        margin-left: 0;
+        padding: 0.2rem 0.5rem;
+      }
+
+      .hero h1 { font-size: 1.8rem; }
     }
 
     #backToTop {
       display: none;
       opacity: 0;
       position: fixed;
-      bottom: 70px;
+      bottom: 85px;
       right: 20px;
       z-index: 1000;
       background-color: var(--primary);
@@ -297,7 +314,12 @@
       font-size: 1.5rem;
       cursor: pointer;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-      transition: background-color 0.3s ease, opacity 0.5s ease;
+      transition: background-color 0.3s, opacity 0.3s ease, transform 0.3s;
+    }
+
+    #backToTop.show {
+      display: block;
+      opacity: 1;
     }
 
     #backToTop:hover {
@@ -306,27 +328,28 @@
   </style>
 </head>
 <body>
+
   <header data-aos="fade-down">
     <div><strong>Captain Designs</strong></div>
     <nav>
       <a href="#services">Services</a>
-      <a href="#works">Works</a>
       <a href="#experience">Experience</a>
+      <a href="#works">Works</a>
       <a href="#contact">Contact</a>
-      <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">🌙</button>
     </nav>
   </header>
 
   <section class="hero" data-aos="zoom-in">
     <div>
-      <h1><span class="typed-text"></span><span class="cursor">|</span></h1>
+      <h1><span class="typed-text"></span><span class="cursor">&nbsp;</span></h1>
       <p>We design beautifully simple things. And we love what we do.</p>
-      <img loading="lazy" src="photos/download (7).jpeg" alt="Captain Designs" />
+      <img loading="lazy" src="photos/download (7).jpeg" alt="Captain Designs Avatar" />
     </div>
   </section>
 
   <section id="services" class="section services" data-aos="fade-up">
-    <h2>What do we help?</h2>
+    <h2>How We Can Help You</h2>
     <div>Crafting eye-catching logos and brand identities</div>
     <div>Designing clean and modern flyers, posters & brochures</div>
     <div>Creating sleek social media graphics</div>
@@ -358,9 +381,9 @@
       <img loading="lazy" src="photos/shawarma plac3.png" alt="Brand Identity">
       <img loading="lazy" src="photos/GUIDING STUDENTS TO SUCCESS.png" alt="Brand Identity">
       <img loading="lazy" src="photos/Black_Brush_Stroke_Label_Banner_Design__Brush_Stroke__Black__Label_PNG_Transparent_Clipart_Image_and_PSD_File_for_Free_Download-removebg-preview (1).png" alt="Brand Identity">
+      <img loading="lazy" src="kettle.jpeg" alt="Kettle Brand Identity">
+      <img loading="lazy" src="Office chair.jpeg" alt="Office Chair Brand Identity">
     </div>
-     <img loading="lazy" src="kettle.jpeg" alt="Brand Identity">
-      <img loading="lazy" src="Office chair.jpeg" alt="Brand Identity">
 
     <div class="pagination">
       <button id="prevPage">Prev</button>
@@ -384,7 +407,7 @@
 
   <section id="contact" class="section" data-aos="fade-up">
     <h2>Let's make something amazing together.</h2>
-    <p>Start by <strong style="color: var(--accent);">saying hi</strong></p>
+    <p style="margin-bottom: 1rem;">Start by <strong style="color: var(--accent);">saying hi</strong></p>
     <form class="contact-form" onsubmit="return validateContactForm()">
       <input type="text" id="name" placeholder="Your Name" required>
       <input type="email" id="email" placeholder="Your Email" required>
@@ -393,12 +416,12 @@
     </form>
   </section>
 
-  <a href="https://wa.me/254710988812" class="whatsapp-float" target="_blank">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="Chat on WhatsApp">
+  <a href="https://wa.me/254710988812" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp Icon">
   </a>
 
-  <footer data-aos="fade-up">
-    <p>&copy; 2025 Captain Designs. All Rights Reserved.</p>
+  <footer>
+    <p>&copy; 2026 Captain Designs. All Rights Reserved.</p>
   </footer>
 
   <button id="backToTop" title="Go to top">↑</button>
@@ -406,14 +429,20 @@
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
   <script>
-    AOS.init();
+    // Initialize Animations
+    AOS.init({ duration: 800, once: true });
 
+    // Initialize Swiper with proper modules pagination config
     new Swiper('.swiper', {
       loop: true,
-      autoplay: { delay: 4000 },
-      pagination: { el: '.swiper-pagination', clickable: true }
+      autoplay: { delay: 4000, disableOnInteraction: false },
+      pagination: { 
+        el: '.swiper-pagination', 
+        clickable: true 
+      }
     });
 
+    // Typed Text Effect Fixes
     document.addEventListener("DOMContentLoaded", () => {
       const typedText = document.querySelector(".typed-text");
       const words = [
@@ -427,23 +456,24 @@
 
       function type() {
         const currentWord = words[wordIndex];
-        const currentText = currentWord.substring(0, charIndex);
-        typedText.textContent = currentText;
-        if (!isDeleting && charIndex < currentWord.length) {
+        if (!isDeleting && charIndex <= currentWord.length) {
+          typedText.textContent = currentWord.substring(0, charIndex);
           charIndex++;
-          setTimeout(type, 100);
-        } else if (isDeleting && charIndex > 0) {
+          setTimeout(type, 80);
+        } else if (isDeleting && charIndex >= 0) {
+          typedText.textContent = currentWord.substring(0, charIndex);
           charIndex--;
-          setTimeout(type, 50);
+          setTimeout(type, 40);
         } else {
           isDeleting = !isDeleting;
           if (!isDeleting) wordIndex = (wordIndex + 1) % words.length;
-          setTimeout(type, 1200);
+          setTimeout(type, 1500);
         }
       }
       type();
     });
 
+    // Form Handling to WhatsApp Intercept
     function validateContactForm() {
       const name = document.getElementById('name').value.trim();
       const email = document.getElementById('email').value.trim();
@@ -461,29 +491,31 @@
       return false;
     }
 
+    // Dynamic Theme Toggling Fixes
     function toggleTheme() {
       document.body.classList.toggle('dark-mode');
+      const btn = document.querySelector('.theme-toggle');
+      btn.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
     }
 
+    // Scroll and Back-to-Top Handlers
     const backToTopBtn = document.getElementById("backToTop");
-    window.onscroll = function () {
-      if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-        backToTopBtn.style.display = "block";
-        setTimeout(() => backToTopBtn.style.opacity = "1", 10);
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        backToTopBtn.classList.add('show');
       } else {
-        backToTopBtn.style.opacity = "0";
-        setTimeout(() => backToTopBtn.style.display = "none", 500);
+        backToTopBtn.classList.remove('show');
       }
-    };
+    });
 
     backToTopBtn.onclick = function () {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
-    // Portfolio Pagination
+    // Portfolio Pagination Logic (Fixed Missing Items Placement)
     const portfolio = document.querySelector('.portfolio');
     const images = portfolio.querySelectorAll('img');
-    const itemsPerPage = 10;
+    const itemsPerPage = 6; // Set to 6 for clean aesthetic dynamic grids
     let currentPage = 1;
     const totalPages = Math.ceil(images.length / itemsPerPage);
     const prevBtn = document.getElementById('prevPage');
@@ -502,11 +534,19 @@
     }
 
     prevBtn.addEventListener('click', () => {
-      if (currentPage > 1) { currentPage--; showPage(currentPage); }
+      if (currentPage > 1) { 
+        currentPage--; 
+        showPage(currentPage); 
+        document.getElementById('works').scrollIntoView({ behavior: 'smooth' });
+      }
     });
 
     nextBtn.addEventListener('click', () => {
-      if (currentPage < totalPages) { currentPage++; showPage(currentPage); }
+      if (currentPage < totalPages) { 
+        currentPage++; 
+        showPage(currentPage); 
+        document.getElementById('works').scrollIntoView({ behavior: 'smooth' });
+      }
     });
 
     showPage(currentPage);
